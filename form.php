@@ -3,8 +3,6 @@ require_once(explode("wp-content", __FILE__)[0] . "wp-load.php");
 
 $validate = true;
 
-use Events\Models\Ace_Submissions;
-
 $subject = "Events RSVP";
 $to = sanitize_email(get_option('admin_email'));
 
@@ -17,6 +15,8 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
         $validate = false;
         echo "Missing fields. ";
     }
+
+    //Use blade for forms
     $message = "<html>
     <head>
     <title>MTN Youth Programme</title>
