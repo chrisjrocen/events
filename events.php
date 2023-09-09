@@ -6,40 +6,39 @@ Version: 1.0
 Author: Your Name
 */
 
-// Register Custom Post Type 'Events'
-function register_events_post_type() {
-    $args = array(
-        'public' => true,
-        'label'  => 'Events',
-        'supports' => array('title', 'editor', 'thumbnail'),
-    );
-    register_post_type('events', $args);
+namespace Events\Tech;
+
+class Events_Plugin
+{
+    private static $_instance = null;
+
+    public static function instance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+
+    public function register_includes()
+    {
+        require_once(EVENTS_PLUGIN_DIR . '/vendor/autoload.php');
+        require_once(EVENTS_PLUGIN_DIR . '/inc/class-post-type.php');
+        require_once(EVENTS_PLUGIN_DIR . '/inc/class-hook-registry.php');
+
+    }
+
+    function define_constants()
+    {
+        define('EVENTS_PLUGIN_DIR', __DIR__);
+        define('EVENTS_PLUGIN_FILE', __FILE__);
+        define('EVENTS_PLUGIN_URL', plugin_dir_url(__FILE__));
+    }
+
+    public function __construct()
+    {
+        $this->define_constants();
+        $this->register_includes();
+    }
 }
-add_action('init', 'register_events_post_type');
-
-// Register Custom Taxonomy 'Locations'
-function register_locations_taxonomy() {
-    $args = array(
-        'public' => true,
-        'label'  => 'Locations',
-        'hierarchical' => true,
-    );
-    register_taxonomy('locations', array('events'), $args);
-}
-add_action('init', 'register_locations_taxonomy');
-
-
-
-add_filter( 'single_template', 'get_custom_events_template' );
-
-//To display events post_type
-function get_custom_events_template( $single_template ) {
-	global $post;
-
-	if ( 'events' === $post->post_type ) {
-		$single_template = dirname( __FILE__ ) . '/events-template.php';
-	}
-
-	return $single_template;
-}
-
+Events_Plugin::instance();

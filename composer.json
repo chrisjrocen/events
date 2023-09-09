@@ -1,0 +1,16 @@
+{
+    "name": "events/plugin",
+    "description": "events cpt",
+    "autoload": {
+        "psr-4": {
+            "Events\\Tech\\": "./inc/"
+        }
+    },
+    "authors": [
+        {
+            "name": "chris ocen",
+            "email": "chrisocen4@gmail.com"
+        }
+    ],
+    "require": {}
+}
