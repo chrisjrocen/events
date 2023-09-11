@@ -1,7 +1,7 @@
 <?php
 require_once(explode("wp-content", __FILE__)[0] . "wp-load.php");
-
 $validate = true;
+use Events\Tech\Form_Submissions;
 
 $subject = "Events RSVP";
 $to = sanitize_email(get_option('admin_email'));
@@ -38,6 +38,8 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
 
         $check_send = wp_mail($to, $subject, $message, $headers);
         if ($check_send) {
+            $submission = new Form_Submissions();
+            $submission->save_form_data($_REQUEST);
             wp_redirect(home_url('/success'));
             exit;
         } else {

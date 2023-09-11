@@ -24,6 +24,7 @@ class Events_Plugin
     {
         require_once(EVENTS_PLUGIN_DIR . '/vendor/autoload.php');
         require_once(EVENTS_PLUGIN_DIR . '/inc/class-post-type.php');
+        require_once(EVENTS_PLUGIN_DIR . '/inc/form-submission.php');
         require_once(EVENTS_PLUGIN_DIR . '/inc/class-hook-registry.php');
 
     }
